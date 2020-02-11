@@ -24,6 +24,7 @@
   "homepage": "https://github.com/htbkoo/epub-chinese-converter#readme",
   "devDependencies": {
     "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.0",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
