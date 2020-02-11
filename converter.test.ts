@@ -1,9 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
-import {createConverterMap, createConverterObj, LangType, SrcPack} from 'tongwen-core';
 import * as EPub from "epub";
 
-import {CHAR_DICTIONARY, MERGED_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 import {createSimplifiedToTraditionalConverter} from "./converter";
 
 describe("converter", function () {
@@ -14,7 +10,6 @@ describe("converter", function () {
         const converter = createSimplifiedToTraditionalConverter();
 
         const BOOK_URL = "./resources/book1.epub";
-        // var epub = new EPub(epubfile, imagewebroot, chapterwebroot);
         const epub = new EPub(BOOK_URL);
 
         epub.on("end", function () {
@@ -23,18 +18,21 @@ describe("converter", function () {
             console.log(`Converting the book - ${epub.metadata.title}`);
             const convertedMetadata = convertMetaData(epub.metadata);
 
-            epub.flow.forEach(chapter => {
+            const convertedBook = {};
+            epub.flow.forEach((chapter) => {
                 const isMetaChapter = !('title' in chapter && 'order' in chapter);
                 if (isMetaChapter) {
-                    console.log(`Now at meta chapter - ${chapter.id}`);
+                    console.log(`Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `);
                     epub.getChapter(chapter.id, function (err, text) {
-                        console.log(text);
+                        // console.log(text);
+                        convertedBook[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
                     });
                 } else {
-                    console.log(`Now at chapter ${chapter.order} - ${chapter.title}`);
+                    console.log(`Now at chapter ${chapter.order} - title: ${chapter.title}`);
                     console.log(chapter);
                     epub.getChapter(chapter.id, function (err, text) {
-                        console.log(text);
+                        // console.log(text);
+                        convertedBook[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
                     });
 
                 }
