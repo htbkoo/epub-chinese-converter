@@ -30,6 +30,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "epub": "^1.2.0",
     "tongwen-core": "^3.2.2"
   }
 }
