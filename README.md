@@ -1,2 +1,2 @@
 # epub-chinese-converter
-A small util to convert epub from Simplified Chinese to Traditional Chinese
+A small util to convert `epub` files from Simplified Chinese to Traditional Chinese
