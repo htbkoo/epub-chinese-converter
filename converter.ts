@@ -13,13 +13,13 @@ namespace Book {
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
     export type Chapters = { [id: string]: Chapter };
-    export type BookWithMeta = { metadata; book; };
+    export type BookWithMeta = { metadata; chapters; };
 }
 
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
     convertMetaData: (metadata: EPub.Metadata) => Book.Metadata;
-    convertBook: (book: Book.Chapters) => Book.Chapters
+    convertChapters: (chapters: Book.Chapters) => Book.Chapters
     converter: Converter;
 }
 
@@ -34,8 +34,8 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
         convertMetaData(metadata) {
             return mapValues(metadata, this.convert);
         },
-        convertBook(book) {
-            return mapValues(book, chapter =>
+        convertChapters(chapters) {
+            return mapValues(chapters, chapter =>
                 produce(chapter, draft => {
                     draft.text = this.convert(draft.text)
                 })
@@ -56,10 +56,10 @@ export function epubConverter(path: string) {
                     console.log(`Converting the book - ${epub.metadata.title}`);
 
                     const metadata = converter.convertMetaData(epub.metadata);
-                    const rawBook = await readBook(epub);
-                    const book = converter.convertBook(rawBook);
+                    const rawChapters = await readChapters(epub);
+                    const chapters = converter.convertChapters(rawChapters);
 
-                    resolve({metadata, book});
+                    resolve({metadata, chapters});
                 });
                 epub.parse();
             });
@@ -76,15 +76,15 @@ function asLoggingInfo(chapter: EPub.TocElement): string {
     }
 }
 
-async function readBook(epub: EPub): Promise<Book.Chapters> {
+async function readChapters(epub: EPub): Promise<Book.Chapters> {
     return epub.flow.reduce(async (prevPromise, chapter) => {
         console.log(asLoggingInfo(chapter));
 
-        const book = await prevPromise;
+        const chapters = await prevPromise;
         const text = await readChapter(epub, chapter.id);
-        book[chapter.id] = Object.assign({text}, chapter);
+        chapters[chapter.id] = Object.assign({text}, chapter);
 
-        return book;
+        return chapters;
     }, Promise.resolve({} as Book.Chapters));
 }
 

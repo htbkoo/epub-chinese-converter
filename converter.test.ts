@@ -10,10 +10,10 @@ describe("converter", function () {
 
         // when
         return epubConverter(BOOK_URL).convert(converter)
-            .then(({metadata, book}) => {
+            .then(({metadata, chapters}) => {
                 // then
                 expect(Object.keys(metadata)).toHaveLength(10);
-                expect(Object.keys(book)).toHaveLength(4);
+                expect(Object.keys(chapters)).toHaveLength(4);
                 done();
             });
     });
