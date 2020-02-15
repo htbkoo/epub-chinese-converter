@@ -43,11 +43,7 @@ export function epubConverter(path: string) {
                     const book = {};
                     const numChapters = epub.flow.length;
                     epub.flow.forEach(async chapter => {
-                        if (isMetaChapter(chapter)) {
-                            console.log(`Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `);
-                        } else {
-                            console.log(`Now at chapter ${chapter.order} - title: ${chapter.title}`);
-                        }
+                        console.log(asLoggingInfo(chapter));
 
                         const text = await readChapter(epub, chapter.id);
                         book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
@@ -62,12 +58,17 @@ export function epubConverter(path: string) {
     };
 }
 
-function isConversionCompleted(book: object, numChapters: number) {
-    return Object.keys(book).length === numChapters;
+function asLoggingInfo(chapter: EPub.TocElement): string {
+    const isMetaChapter = !('title' in chapter && 'order' in chapter);
+    if (isMetaChapter) {
+        return `Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `;
+    } else {
+        return `Now at chapter ${chapter.order} - title: ${chapter.title}`;
+    }
 }
 
-function isMetaChapter(chapter: EPub.TocElement) {
-    return !('title' in chapter && 'order' in chapter);
+function isConversionCompleted(book: object, numChapters: number) {
+    return Object.keys(book).length === numChapters;
 }
 
 async function readChapter(epub: EPub, id: EPub.TocElement["id"]): Promise<string> {
