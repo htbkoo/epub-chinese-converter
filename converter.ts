@@ -66,28 +66,6 @@ export async function readEpub(path: string): Promise<Book.BookWithMeta> {
     });
 }
 
-export function epubConverter(path: string) {
-    return {
-        async convert(converter: SimplifiedToTraditionalConverter): Promise<Book.BookWithMeta> {
-            const epub = new EPub(path);
-
-            return new Promise(resolve => {
-                epub.on("end", async () => {
-                    // epub is now usable
-                    console.log(`Converting the book - ${epub.metadata.title}`);
-
-                    const metadata = converter.convertMetaData(epub.metadata);
-                    const rawChapters = await readChapters(epub);
-                    const chapters = converter.convertChapters(rawChapters);
-
-                    resolve({metadata, chapters});
-                });
-                epub.parse();
-            });
-        }
-    };
-}
-
 function asLoggingInfo(chapter: EPub.TocElement): string {
     const isMetaChapter = !('title' in chapter && 'order' in chapter);
     if (isMetaChapter) {
