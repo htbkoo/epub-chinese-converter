@@ -1,8 +1,8 @@
 import {createConverterMap, LangType, SrcPack} from 'tongwen-core';
 import * as EPub from "epub";
 import {Converter} from "tongwen-core/esm/converter/types";
-
 import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
+import {mapValues} from "lodash";
 
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
@@ -24,11 +24,7 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
             return converter.phrase(LangType.s2t, text);
         },
         convertMetaData(metadata: object): object {
-            return Object.keys(metadata)
-                .reduce((obj, key) => {
-                    obj[key] = this.convert(metadata[key]);
-                    return obj;
-                }, {});
+            return mapValues(metadata, this.convert);
         },
         converter
     }
