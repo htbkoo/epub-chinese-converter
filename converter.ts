@@ -22,6 +22,8 @@ interface ConvertedBook {
     book;
 }
 
+type EPubChapterId = EPub.TocElement["id"];
+
 export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditionalConverter {
     const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: []};
     const converter = createConverterMap(src);
@@ -71,7 +73,7 @@ function isConversionCompleted(book: object, numChapters: number) {
     return Object.keys(book).length === numChapters;
 }
 
-async function readChapter(epub: EPub, id: EPub.TocElement["id"]): Promise<string> {
+async function readChapter(epub: EPub, id: EPubChapterId): Promise<string> {
     return new Promise((resolve, reject) =>
         epub.getChapter(id, (err, text) =>
             err ? reject(err) : resolve(text)
