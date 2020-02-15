@@ -1,5 +1,3 @@
-import * as EPub from "epub";
-
 import {createSimplifiedToTraditionalConverter, epubConverter} from "./converter";
 
 describe("converter", function () {
