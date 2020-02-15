@@ -35,10 +35,10 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
 }
 
 export function epubConverter(path: string) {
-    const epub = new EPub(path);
-
     return {
         async convert(converter: SimplifiedToTraditionalConverter): Promise<ConvertedBook> {
+            const epub = new EPub(path);
+
             return new Promise(resolve => {
                 epub.on("end", function () {
                     // epub is now usable
@@ -54,7 +54,6 @@ export function epubConverter(path: string) {
                         }
 
                         epub.getChapter(chapter.id, function (err, text) {
-                            // console.log(text);
                             book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
                             if (isConversionCompleted(book, numChapters)) {
                                 resolve({metadata, book});
