@@ -25,7 +25,8 @@ interface SimplifiedToTraditionalConverter {
 }
 
 export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditionalConverter {
-    const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: []};
+    const NO_TRANSLATION_PROVIDED_FROM_TRADITIONAL_TO_SIMPLIFIED = [];
+    const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: NO_TRANSLATION_PROVIDED_FROM_TRADITIONAL_TO_SIMPLIFIED};
     const converter = createConverterMap(src);
 
     return {
