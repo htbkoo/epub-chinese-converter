@@ -36,21 +36,14 @@ export function epubConverter(path: string) {
             const epub = new EPub(path);
 
             return new Promise(resolve => {
-                epub.on("end", function () {
+                epub.on("end", async () => {
                     // epub is now usable
                     console.log(`Converting the book - ${epub.metadata.title}`);
-                    const metadata = converter.convertMetaData(epub.metadata);
-                    const book = {};
-                    const numChapters = epub.flow.length;
-                    epub.flow.forEach(async chapter => {
-                        console.log(asLoggingInfo(chapter));
 
-                        const text = await readChapter(epub, chapter.id);
-                        book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
-                        if (isConversionCompleted(book, numChapters)) {
-                            resolve({metadata, book});
-                        }
-                    });
+                    const metadata = converter.convertMetaData(epub.metadata);
+                    const book = await readAndConvertBook(epub, converter);
+
+                    resolve({metadata, book});
                 });
                 epub.parse();
             });
@@ -76,5 +69,22 @@ async function readChapter(epub: EPub, id: EPub.TocElement["id"]): Promise<strin
         epub.getChapter(id, (err, text) =>
             err ? reject(err) : resolve(text)
         )
+    )
+}
+
+async function readAndConvertBook(epub: EPub, converter: SimplifiedToTraditionalConverter) {
+    const book = {};
+    const numChapters = epub.flow.length;
+
+    return new Promise(resolve =>
+        epub.flow.forEach(async chapter => {
+            console.log(asLoggingInfo(chapter));
+
+            const chapterText = await readChapter(epub, chapter.id);
+            book[chapter.id] = Object.assign({text: converter.convert(chapterText)}, chapter);
+            if (isConversionCompleted(book, numChapters)) {
+                resolve(book);
+            }
+        })
     )
 }
