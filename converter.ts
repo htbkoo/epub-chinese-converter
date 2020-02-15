@@ -81,20 +81,15 @@ function asLoggingInfo(chapter: EPub.TocElement): string {
 }
 
 async function readBook(epub: EPub): Promise<Book.Chapters> {
-    const book: Book.Chapters = {};
-    const numChapters = epub.flow.length;
+    return epub.flow.reduce(async (prevPromise, chapter) => {
+        console.log(asLoggingInfo(chapter));
 
-    return new Promise(resolve =>
-        epub.flow.forEach(async chapter => {
-            console.log(asLoggingInfo(chapter));
+        const book = await prevPromise;
+        const text = await readChapter(epub, chapter.id);
+        book[chapter.id] = Object.assign({text}, chapter);
 
-            const text = await readChapter(epub, chapter.id);
-            book[chapter.id] = Object.assign({text}, chapter);
-            if (isConversionCompleted(book, numChapters)) {
-                resolve(book);
-            }
-        })
-    )
+        return book;
+    }, Promise.resolve({} as Book.Chapters));
 }
 
 async function readChapter(epub: EPub, id: EPubChapterId): Promise<Book.ChapterText> {
@@ -103,8 +98,4 @@ async function readChapter(epub: EPub, id: EPubChapterId): Promise<Book.ChapterT
             err ? reject(err) : resolve(text)
         )
     )
-}
-
-function isConversionCompleted(book: Book.Chapters, numChapters: number) {
-    return Object.keys(book).length === numChapters;
 }
