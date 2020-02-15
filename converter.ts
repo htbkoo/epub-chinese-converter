@@ -6,6 +6,8 @@ import {mapValues} from "lodash";
 
 import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 
+type EPubChapterId = EPub.TocElement["id"];
+
 namespace Book {
     export type Metadata = object;
     export type ChapterText = string;
@@ -20,8 +22,6 @@ interface SimplifiedToTraditionalConverter {
     convertBook: (book: Book.Chapters) => Book.Chapters
     converter: Converter;
 }
-
-type EPubChapterId = EPub.TocElement["id"];
 
 export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditionalConverter {
     const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: []};
