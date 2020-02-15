@@ -73,7 +73,7 @@ function isConversionCompleted(book: object, numChapters: number) {
     return Object.keys(book).length === numChapters;
 }
 
-async function readChapter(epub: EPub, id: EPubChapterId): Promise<string> {
+async function readChapter(epub: EPub, id: EPubChapterId): Promise<Book.ChapterText> {
     return new Promise((resolve, reject) =>
         epub.getChapter(id, (err, text) =>
             err ? reject(err) : resolve(text)
