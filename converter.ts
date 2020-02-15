@@ -11,6 +11,7 @@ namespace Book {
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
     export type Chapters = { [id: string]: Chapter };
+    export type BookWithMeta = { metadata; book; };
 }
 
 interface SimplifiedToTraditionalConverter {
@@ -18,11 +19,6 @@ interface SimplifiedToTraditionalConverter {
     convertMetaData: (metadata: EPub.Metadata) => Book.Metadata;
     convertBook: (book: Book.Chapters) => Book.Chapters
     converter: Converter;
-}
-
-interface ConvertedBook {
-    metadata;
-    book;
 }
 
 type EPubChapterId = EPub.TocElement["id"];
@@ -51,7 +47,7 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
 
 export function epubConverter(path: string) {
     return {
-        async convert(converter: SimplifiedToTraditionalConverter): Promise<ConvertedBook> {
+        async convert(converter: SimplifiedToTraditionalConverter): Promise<Book.BookWithMeta> {
             const epub = new EPub(path);
 
             return new Promise(resolve => {
