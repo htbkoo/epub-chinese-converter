@@ -80,10 +80,6 @@ function asLoggingInfo(chapter: EPub.TocElement): string {
     }
 }
 
-function isConversionCompleted(book: Book.Chapters, numChapters: number) {
-    return Object.keys(book).length === numChapters;
-}
-
 async function readBook(epub: EPub): Promise<Book.Chapters> {
     const book: Book.Chapters = {};
     const numChapters = epub.flow.length;
@@ -106,4 +102,8 @@ async function readChapter(epub: EPub, id: EPubChapterId): Promise<Book.ChapterT
             err ? reject(err) : resolve(text)
         )
     )
+}
+
+function isConversionCompleted(book: Book.Chapters, numChapters: number) {
+    return Object.keys(book).length === numChapters;
 }
