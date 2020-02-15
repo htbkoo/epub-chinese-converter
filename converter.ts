@@ -69,7 +69,7 @@ function asLoggingInfo(chapter: EPub.TocElement): string {
     }
 }
 
-function isConversionCompleted(book: object, numChapters: number) {
+function isConversionCompleted(book: Book.Chapters, numChapters: number) {
     return Object.keys(book).length === numChapters;
 }
 
