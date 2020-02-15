@@ -15,8 +15,4 @@ describe("converter", function () {
                 console.log("");
             });
     });
-
-    it("read using fs", () => {
-        // const file = (await fs.promises.readFile(path.normalize(BOOK_URL))).toString();
-    });
 });
