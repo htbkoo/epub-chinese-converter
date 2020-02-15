@@ -1,7 +1,7 @@
-import {createSimplifiedToTraditionalConverter, epubConverter} from "./converter";
+import {createSimplifiedToTraditionalConverter, epubConverter, readEpub} from "./converter";
 
 describe("converter", function () {
-    it("should convert", async (done) => {
+    it("should read and convert", async (done) => {
         jest.setTimeout(60000);
 
         // given
@@ -9,7 +9,7 @@ describe("converter", function () {
         const BOOK_URL = "./resources/GeographyofBliss_oneChapter.epub";
 
         // when
-        return epubConverter(BOOK_URL).convert(converter)
+        return readEpub(BOOK_URL)
             .then(({metadata, chapters}) => {
                 // then
                 expect(Object.keys(metadata)).toHaveLength(10);

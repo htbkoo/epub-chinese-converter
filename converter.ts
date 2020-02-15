@@ -45,6 +45,21 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
     }
 }
 
+export async function readEpub(path: string): Promise<Book.BookWithMeta> {
+    const epub = new EPub(path);
+
+    return new Promise(resolve => {
+        epub.on("end", async () => {
+            // epub is now usable
+            console.log(`Converting the book - ${epub.metadata.title}`);
+            const metadata = epub.metadata;
+            const chapters = await readChapters(epub);
+            resolve({metadata, chapters});
+        });
+        epub.parse();
+    });
+}
+
 export function epubConverter(path: string) {
     return {
         async convert(converter: SimplifiedToTraditionalConverter): Promise<Book.BookWithMeta> {
