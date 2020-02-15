@@ -19,7 +19,8 @@ namespace Book {
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
     convertMetaData: (metadata: EPub.Metadata) => Book.Metadata;
-    convertChapters: (chapters: Book.Chapters) => Book.Chapters
+    convertChapters: (chapters: Book.Chapters) => Book.Chapters;
+    convertBook: (book: Book.BookWithMeta) => Book.BookWithMeta;
     converter: Converter;
 }
 
@@ -40,6 +41,11 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
                     draft.text = this.convert(draft.text)
                 })
             );
+        },
+        convertBook(book) {
+            const metadata = this.convertMetaData(book.metadata);
+            const chapters = this.convertChapters(book.chapters);
+            return {metadata, chapters};
         },
         converter
     }
