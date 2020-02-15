@@ -13,7 +13,7 @@ namespace Book{
 
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
-    convertMetaData: (metadata: EPub.Metadata) => object;
+    convertMetaData: (metadata: EPub.Metadata) => Book.Metadata;
     converter: Converter;
 }
 
