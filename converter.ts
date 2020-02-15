@@ -16,8 +16,8 @@ interface ConvertedBook {
 }
 
 export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditionalConverter {
-    const dics: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: []};
-    const converter = createConverterMap(dics);
+    const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: []};
+    const converter = createConverterMap(src);
 
     return {
         convert(text: string) {
