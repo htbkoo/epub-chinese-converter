@@ -4,6 +4,13 @@ import {Converter} from "tongwen-core/esm/converter/types";
 import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 import {mapValues} from "lodash";
 
+namespace Book{
+    export type Metadata = object;
+    export type ChapterText = string;
+    export type Chapter = object & { text: ChapterText };
+    export type Chapters = { [id: string]: Chapter };
+}
+
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
     convertMetaData: (metadata: EPub.Metadata) => object;
