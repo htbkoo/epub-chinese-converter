@@ -1,4 +1,4 @@
-import {createSimplifiedToTraditionalConverter, epubConverter, readEpub} from "./converter";
+import {createSimplifiedToTraditionalConverter, readEpub} from "./converter";
 
 describe("converter", function () {
     it("should read and convert", async () => {
