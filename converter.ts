@@ -23,7 +23,7 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
         convert(text: string) {
             return converter.phrase(LangType.s2t, text);
         },
-        convertMetaData(metadata: object): object {
+        convertMetaData(metadata) {
             return mapValues(metadata, this.convert);
         },
         converter
