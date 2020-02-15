@@ -38,7 +38,7 @@ export function epubConverter(path: string) {
             return new Promise(resolve => {
                 epub.on("end", function () {
                     // epub is now usable
-                    -console.log(`Converting the book - ${epub.metadata.title}`);
+                    console.log(`Converting the book - ${epub.metadata.title}`);
                     const metadata = converter.convertMetaData(epub.metadata);
                     const book = {};
                     const numChapters = epub.flow.length;
