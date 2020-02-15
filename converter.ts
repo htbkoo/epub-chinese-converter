@@ -42,23 +42,22 @@ export function epubConverter(path: string) {
             return new Promise(resolve => {
                 epub.on("end", function () {
                     // epub is now usable
-                    console.log(`Converting the book - ${epub.metadata.title}`);
+                    -console.log(`Converting the book - ${epub.metadata.title}`);
                     const metadata = converter.convertMetaData(epub.metadata);
                     const book = {};
                     const numChapters = epub.flow.length;
-                    epub.flow.forEach((chapter) => {
+                    epub.flow.forEach(async chapter => {
                         if (isMetaChapter(chapter)) {
                             console.log(`Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `);
                         } else {
                             console.log(`Now at chapter ${chapter.order} - title: ${chapter.title}`);
                         }
 
-                        epub.getChapter(chapter.id, function (err, text) {
-                            book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
-                            if (isConversionCompleted(book, numChapters)) {
-                                resolve({metadata, book});
-                            }
-                        });
+                        const text = await readChapter(epub, chapter.id);
+                        book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
+                        if (isConversionCompleted(book, numChapters)) {
+                            resolve({metadata, book});
+                        }
                     });
                 });
                 epub.parse();
@@ -73,4 +72,16 @@ function isConversionCompleted(book: object, numChapters: number) {
 
 function isMetaChapter(chapter: EPub.TocElement) {
     return !('title' in chapter && 'order' in chapter);
+}
+
+async function readChapter(epub: EPub, id: EPub.TocElement["id"]): Promise<string> {
+    return new Promise((resolve, reject) => {
+        epub.getChapter(id, (err, text) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(text);
+            }
+        });
+    })
 }

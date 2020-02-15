@@ -6,13 +6,15 @@ describe("converter", function () {
 
         // given
         const converter = createSimplifiedToTraditionalConverter();
-        const BOOK_URL = "./resources/book1.epub";
+        const BOOK_URL = "./resources/GeographyofBliss_oneChapter.epub";
 
         // when
         // then
         return epubConverter(BOOK_URL).convert(converter)
             .then(({metadata, book}) => {
-                console.log("");
+                expect(Object.keys(metadata)).toHaveLength(10);
+                expect(Object.keys(book)).toHaveLength(4);
+                done();
             });
     });
 });
