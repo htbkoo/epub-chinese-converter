@@ -13,7 +13,7 @@ namespace Book {
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
     export type Chapters = { [id: string]: Chapter };
-    export type BookWithMeta = { metadata; chapters; };
+    export type BookWithMeta = { metadata: Metadata; chapters: Chapters; };
 }
 
 interface SimplifiedToTraditionalConverter {
