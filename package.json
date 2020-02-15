@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "epub": "^1.2.0",
+    "lodash": "^4.17.15",
     "tongwen-core": "^3.2.2"
   }
 }
