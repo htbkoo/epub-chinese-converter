@@ -9,9 +9,9 @@ describe("converter", function () {
         const BOOK_URL = "./resources/GeographyofBliss_oneChapter.epub";
 
         // when
-        // then
         return epubConverter(BOOK_URL).convert(converter)
             .then(({metadata, book}) => {
+                // then
                 expect(Object.keys(metadata)).toHaveLength(10);
                 expect(Object.keys(book)).toHaveLength(4);
                 done();
