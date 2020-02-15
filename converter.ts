@@ -71,13 +71,9 @@ function isMetaChapter(chapter: EPub.TocElement) {
 }
 
 async function readChapter(epub: EPub, id: EPub.TocElement["id"]): Promise<string> {
-    return new Promise((resolve, reject) => {
-        epub.getChapter(id, (err, text) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(text);
-            }
-        });
-    })
+    return new Promise((resolve, reject) =>
+        epub.getChapter(id, (err, text) =>
+            err ? reject(err) : resolve(text)
+        )
+    )
 }
