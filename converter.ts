@@ -6,7 +6,8 @@ import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 
 interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
-    converter: Converter
+    convertMetaData: (metadata: EPub.Metadata) => object;
+    converter: Converter;
 }
 
 interface ConvertedBook {
@@ -22,6 +23,13 @@ export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditiona
         convert(text: string) {
             return converter.phrase(LangType.s2t, text);
         },
+        convertMetaData(metadata: object): object {
+            return Object.keys(metadata)
+                .reduce((obj, key) => {
+                    obj[key] = this.convert(metadata[key]);
+                    return obj;
+                }, {});
+        },
         converter
     }
 }
@@ -35,12 +43,11 @@ export function epubConverter(path: string) {
                 epub.on("end", function () {
                     // epub is now usable
                     console.log(`Converting the book - ${epub.metadata.title}`);
-                    const metadata = convertMetaData(epub.metadata);
+                    const metadata = converter.convertMetaData(epub.metadata);
                     const book = {};
                     const numChapters = epub.flow.length;
                     epub.flow.forEach((chapter) => {
-                        const isMetaChapter = !('title' in chapter && 'order' in chapter);
-                        if (isMetaChapter) {
+                        if (isMetaChapter(chapter)) {
                             console.log(`Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `);
                         } else {
                             console.log(`Now at chapter ${chapter.order} - title: ${chapter.title}`);
@@ -49,26 +56,22 @@ export function epubConverter(path: string) {
                         epub.getChapter(chapter.id, function (err, text) {
                             // console.log(text);
                             book[chapter.id] = Object.assign({text: converter.convert(text)}, chapter);
-                            if (isConversionCompleted()) {
+                            if (isConversionCompleted(book, numChapters)) {
                                 resolve({metadata, book});
                             }
                         });
                     });
-
-                    function isConversionCompleted() {
-                        return Object.keys(book).length === numChapters;
-                    }
-
-                    function convertMetaData(metadata: object): object {
-                        return Object.keys(metadata)
-                            .reduce((obj, key) => {
-                                obj[key] = converter.convert(metadata[key]);
-                                return obj;
-                            }, {});
-                    }
                 });
                 epub.parse();
             });
         }
-    }
+    };
+}
+
+function isConversionCompleted(book: object, numChapters: number) {
+    return Object.keys(book).length === numChapters;
+}
+
+function isMetaChapter(chapter: EPub.TocElement) {
+    return !('title' in chapter && 'order' in chapter);
 }
