@@ -88,7 +88,8 @@ async function readBook(epub: EPub): Promise<Book.Chapters> {
         epub.flow.forEach(async chapter => {
             console.log(asLoggingInfo(chapter));
 
-            book[chapter.id] = Object.assign({text: await readChapter(epub, chapter.id)}, chapter);
+            const text = await readChapter(epub, chapter.id);
+            book[chapter.id] = Object.assign({text}, chapter);
             if (isConversionCompleted(book, numChapters)) {
                 resolve(book);
             }
