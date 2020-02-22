@@ -1,12 +1,14 @@
 import {createEpub, createSimplifiedToTraditionalConverter, readEpub} from "./converter";
 
+import path from "path";
+
 describe("converter", function () {
     it("should read and convert", async () => {
         jest.setTimeout(60000);
 
         // given
         const converter = createSimplifiedToTraditionalConverter();
-        const BOOK_URL = "./resources/GeographyofBliss_oneChapter.epub";
+        const BOOK_URL = normalizeRelativePath("./resources/GeographyofBliss_oneChapter.epub");
 
         // when
         const book = await readEpub(BOOK_URL);
@@ -18,7 +20,7 @@ describe("converter", function () {
 
     it("should create new epub", async () => {
         // given
-        const OUTPUT_BOOK_URL = "./resources/test_epub_gen.epub";
+        const OUTPUT_BOOK_URL = normalizeRelativePath("./resources/test_epub_gen.epub");
 
         const content = [
             {
@@ -52,6 +54,10 @@ describe("converter", function () {
         const TOC_CONTENT_SIZE = 1;
         assertBook(createdBook, {metadata: 18, chapters: content.length + TOC_CONTENT_SIZE});
     });
+
+    function normalizeRelativePath(relativePath: string) {
+        return path.normalize(`${__dirname}/${relativePath}`);
+    }
 
     function assertBook({metadata, chapters}, expectedLengths) {
         // then
