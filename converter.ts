@@ -1,15 +1,16 @@
 import {createConverterMap, LangType, SrcPack} from 'tongwen-core';
-import * as EPub from "epub";
+import EPub, {Metadata as EpubMetadata} from "epub";
 import {Converter} from "tongwen-core/esm/converter/types";
 import produce from "immer";
 import {mapValues} from "lodash";
+import EpubGen from "epub-gen";
 
 import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 
 type EPubChapterId = EPub.TocElement["id"];
 
 namespace Book {
-    export type Metadata = object;
+    export type Metadata = EpubMetadata;
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
     export type Chapters = { [id: string]: Chapter };
@@ -26,7 +27,10 @@ interface SimplifiedToTraditionalConverter {
 
 export function createSimplifiedToTraditionalConverter(): SimplifiedToTraditionalConverter {
     const NO_TRANSLATION_PROVIDED_FROM_TRADITIONAL_TO_SIMPLIFIED = [];
-    const src: SrcPack = {s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY], t2s: NO_TRANSLATION_PROVIDED_FROM_TRADITIONAL_TO_SIMPLIFIED};
+    const src: SrcPack = {
+        s2t: [CHAR_DICTIONARY, PHRASE_DICTIONARY],
+        t2s: NO_TRANSLATION_PROVIDED_FROM_TRADITIONAL_TO_SIMPLIFIED
+    };
     const converter = createConverterMap(src);
 
     return {
@@ -65,6 +69,17 @@ export async function readEpub(path: string): Promise<Book.BookWithMeta> {
         });
         epub.parse();
     });
+}
+
+export async function createEpub(options, output?: string) {
+    return new EpubGen(options, output).promise.then(
+        () => {
+            console.log(`Ebook Generated Successfully at path: ${output}!`);
+        },
+        err => {
+            console.error("Failed to generate Ebook because of ", err)
+        }
+    );
 }
 
 function asLoggingInfo(chapter: EPub.TocElement): string {
