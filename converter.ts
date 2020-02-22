@@ -7,9 +7,9 @@ import EpubGen from "epub-gen";
 
 import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
 
-type EPubChapterId = EPub.TocElement["id"];
+export type EPubChapterId = EPub.TocElement["id"];
 
-namespace Book {
+export namespace Book {
     export type Metadata = EpubMetadata;
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
@@ -17,7 +17,7 @@ namespace Book {
     export type BookWithMeta = { metadata: Metadata; chapters: Chapters; };
 }
 
-interface SimplifiedToTraditionalConverter {
+export interface SimplifiedToTraditionalConverter {
     convert: (text: string) => string;
     convertMetaData: (metadata: EPub.Metadata) => Book.Metadata;
     convertChapters: (chapters: Book.Chapters) => Book.Chapters;
