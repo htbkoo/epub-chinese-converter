@@ -1,4 +1,4 @@
-# epub-chinese-converter ![npm](https://img.shields.io/npm/v/epub-chinese-converter) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/htbkoo/epub-chinese-converter/Node%20CI) 
+# epub-chinese-converter [![npm](https://img.shields.io/npm/v/epub-chinese-converter)](https://www.npmjs.com/package/epub-chinese-converter) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/htbkoo/epub-chinese-converter/Node%20CI)](https://github.com/htbkoo/epub-chinese-converter/actions?query=workflow%3A%22Node+CI%22)
 
 A small util to convert `epub` files from Simplified Chinese to Traditional Chinese
 
