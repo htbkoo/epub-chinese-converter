@@ -1,4 +1,7 @@
-import {createSimplifiedToTraditionalConverter, readEpub} from "./converter";
+import path from "path";
+
+import {createSimplifiedToTraditionalConverter} from "./converter";
+import {readEpub} from "./epub-io";
 
 describe("converter", function () {
     it("should read and convert", async () => {
@@ -6,7 +9,7 @@ describe("converter", function () {
 
         // given
         const converter = createSimplifiedToTraditionalConverter();
-        const BOOK_URL = "./resources/GeographyofBliss_oneChapter.epub";
+        const BOOK_URL = normalizeRelativePath("./resources/GeographyofBliss_oneChapter.epub");
 
         // when
         const book = await readEpub(BOOK_URL);
@@ -15,6 +18,10 @@ describe("converter", function () {
         const convertedBook = converter.convertBook(book);
         assertBook(convertedBook, {metadata: 10, chapters: 4});
     });
+
+    function normalizeRelativePath(relativePath: string) {
+        return path.normalize(`${__dirname}/${relativePath}`);
+    }
 
     function assertBook({metadata, chapters}, expectedLengths) {
         // then
