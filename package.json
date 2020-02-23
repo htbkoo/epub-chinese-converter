@@ -2,9 +2,11 @@
   "name": "epub-chinese-converter",
   "version": "0.0.0",
   "description": "A small util to convert epub files from Simplified Chinese to Traditional Chinese",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc -p ./tsconfig-prod.json"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
   },
   "dependencies": {
     "epub": "^1.2.0",
+    "epub-gen": "^0.1.0",
     "immer": "^5.3.6",
     "lodash": "^4.17.15",
     "tongwen-core": "^3.2.2"
