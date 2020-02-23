@@ -1,6 +1,6 @@
 {
   "name": "epub-chinese-converter",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A small util to convert epub files from Simplified Chinese to Traditional Chinese",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.7.0",
     "jest": "^25.1.0",
+    "np": "^6.1.0",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
   },
