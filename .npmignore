@@ -2,3 +2,6 @@ tsconfig.json
 tsconfig-prod.json
 src
 .github
+.idea
+*.iml
+jest.config.js
