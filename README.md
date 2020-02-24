@@ -18,6 +18,7 @@ const { metadata, chapters } = book;
 
 - Conversion
 ```
+import {createSimplifiedToTraditionalConverter} from "epub-chinese-converter";
 const converter = createSimplifiedToTraditionalConverter();
 const convertedBook = converter.convertBook(book);
 const { metadata, chapters } = convertedBook;
