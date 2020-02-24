@@ -13,6 +13,8 @@ describe("epub-io", function () {
 
         // when
         const book = await readEpub(BOOK_URL);
+
+        // then
         assertBook(book, {metadata: 10, chapters: 4});
     });
 
