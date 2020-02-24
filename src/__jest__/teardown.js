@@ -1,4 +1,4 @@
-const {EPUB_TO_BE_CREATED_URL} = require("../epub-io.test");
+const {EPUB_TO_BE_CREATED_URL} = require("./utils");
 const fs = require("fs");
 
 afterEach(() => {
