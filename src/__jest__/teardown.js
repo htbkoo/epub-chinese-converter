@@ -1,6 +1,11 @@
 const {EPUB_TO_BE_CREATED_URL} = require("../epub-io.test");
 const fs = require("fs");
 
+afterEach(() => {
+    console.log('afterEach');
+    tryRemovingFile(EPUB_TO_BE_CREATED_URL);
+});
+
 afterAll(() => {
     console.log('afterAll');
     tryRemovingFile(EPUB_TO_BE_CREATED_URL);
