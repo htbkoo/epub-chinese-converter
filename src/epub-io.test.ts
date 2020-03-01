@@ -19,7 +19,6 @@ describe("epub-io", function () {
 
     it("should create new epub", async () => {
         // given
-
         const content = [
             {
                 title: "About the author", // Optional
