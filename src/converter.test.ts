@@ -9,7 +9,7 @@ describe("converter", function () {
 
         // given
         const converter = createSimplifiedToTraditionalConverter();
-        const BOOK_URL = normalizeRelativePath("./resources/GeographyofBliss_oneChapter.epub");
+        const BOOK_URL = normalizeRelativePath("./test/resources/GeographyofBliss_oneChapter.epub");
 
         // when
         const book = await readEpub(BOOK_URL);

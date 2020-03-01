@@ -3,7 +3,7 @@ import {Converter} from "tongwen-core/esm/converter/types";
 import produce from "immer";
 import {mapValues} from "lodash";
 
-import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./resources/dictionary";
+import {CHAR_DICTIONARY, PHRASE_DICTIONARY} from "./dictionary";
 import {Book} from "./typings";
 
 export interface SimplifiedToTraditionalConverter {

@@ -1,14 +1,14 @@
 import path from "path";
 
 import {createEpub, readEpub} from "./epub-io";
-import {EPUB_TO_BE_CREATED_URL} from "./__jest__/utils";
+import {EPUB_TO_BE_CREATED_URL} from "./test/__jest__/utils";
 
 describe("epub-io", function () {
     it("should read epub", async () => {
         jest.setTimeout(60000);
 
         // given
-        const BOOK_URL = normalizeRelativePath("./resources/GeographyofBliss_oneChapter.epub");
+        const BOOK_URL = normalizeRelativePath("./test/resources/GeographyofBliss_oneChapter.epub");
 
         // when
         const book = await readEpub(BOOK_URL);
