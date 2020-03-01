@@ -1,8 +1,7 @@
 import path from "path";
 
 import {createEpub, readEpub} from "./epub-io";
-
-export const EPUB_TO_BE_CREATED_URL = normalizeRelativePath("./resources/test_epub_gen.epub");
+import {EPUB_TO_BE_CREATED_URL} from "./__jest__/utils";
 
 describe("epub-io", function () {
     it("should read epub", async () => {
@@ -13,12 +12,13 @@ describe("epub-io", function () {
 
         // when
         const book = await readEpub(BOOK_URL);
+
+        // then
         assertBook(book, {metadata: 10, chapters: 4});
     });
 
     it("should create new epub", async () => {
         // given
-
         const content = [
             {
                 title: "About the author", // Optional
@@ -57,8 +57,8 @@ describe("epub-io", function () {
         expect(Object.keys(metadata)).toHaveLength(expectedLengths.metadata);
         expect(Object.keys(chapters)).toHaveLength(expectedLengths.chapters);
     }
-});
 
-function normalizeRelativePath(relativePath: string) {
-    return path.normalize(`${__dirname}/${relativePath}`);
-}
+    function normalizeRelativePath(relativePath: string) {
+        return path.normalize(`${__dirname}/${relativePath}`);
+    }
+});
