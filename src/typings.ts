@@ -1,4 +1,4 @@
-import {Metadata as EpubMetadata} from "epub";
+import { Metadata as EpubMetadata } from './utils/types'
 
 export namespace Book {
     export type Metadata = EpubMetadata | object;
