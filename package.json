@@ -36,10 +36,10 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "epub": "^1.2.0",
-    "epub-gen": "^0.1.0",
-    "immer": "^5.3.6",
-    "lodash": "^4.17.15",
-    "tongwen-core": "^3.2.2"
+    "epub": "1.2.1",
+    "epub-gen": "0.1.0",
+    "immer": "9.0.6",
+    "lodash": "4.17.21",
+    "tongwen-core": "3.2.5"
   }
 }
