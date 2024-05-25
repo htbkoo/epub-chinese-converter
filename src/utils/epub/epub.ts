@@ -1,5 +1,5 @@
 // @ts-nocheck
-import * as AdmZip from '../adm-zip/adm-zip';
+import { default as AdmZip }  from '../adm-zip/adm-zip';
 
 var xml2js = require('xml2js');
 var xml2jsOptions = xml2js.defaults['0.1'];
@@ -11,7 +11,7 @@ try {
 } catch (err) {
     // Mock zipfile using pure-JS adm-zip:
     var ZipFile = function(filename) {
-        this.admZip = new AdmZip.default(filename);
+        this.admZip = new AdmZip(filename);
         this.names = this.admZip.getEntries().map(function(zipEntry) {
             return zipEntry.entryName;
         });
