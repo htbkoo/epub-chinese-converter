@@ -7,13 +7,16 @@ export type EPubChapterId = EPub.TocElement["id"];
 export async function readEpub(path: string): Promise<Book.BookWithMeta> {
     const epub = new EPub(path);
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         epub.on("end", async () => {
             // epub is now usable
             console.log(`Converting the book - ${epub.metadata.title}`);
             const metadata = epub.metadata;
             const chapters = await readChapters(epub);
             resolve({metadata, chapters});
+        });
+        epub.on('error', async (e) => {
+            reject(e);
         });
         epub.parse();
     });
