@@ -1,8 +1,9 @@
-import { EPub } from "./utils/epub";
 import EpubGen from "epub-gen";
 import { Book } from "./typings";
+import { TocElement } from "./utils/types";
+import { EPub } from "./utils/epub";
 
-export type EPubChapterId = EPub.TocElement["id"];
+export type EPubChapterId = TocElement["id"];
 
 export async function readEpub(path: string): Promise<Book.BookWithMeta> {
   const epub = new EPub(path);
@@ -33,7 +34,7 @@ export async function createEpub(options, output?: string) {
   );
 }
 
-function asLoggingInfo(chapter: EPub.TocElement): string {
+function asLoggingInfo(chapter: TocElement): string {
   const isMetaChapter = !('title' in chapter && 'order' in chapter);
   if (isMetaChapter) {
     return `Now at meta chapter - id: ${chapter.id} / href: ${chapter.href} `;

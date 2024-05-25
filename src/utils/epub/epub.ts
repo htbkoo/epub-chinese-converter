@@ -55,7 +55,7 @@ try {
  *      /images/logo_img/OPT/logo.jpg
  **/
 export class EPub extends EventEmitter {
-    constructor(fname, imageroot, linkroot) {
+    constructor(fname, imageroot?, linkroot?) {
         super();
 
         this.filename = fname;

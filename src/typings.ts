@@ -1,7 +1,7 @@
-import Epub from './utils/epub'
+import { Metadata as EpubMetadata } from './utils/types'
 
 export namespace Book {
-    export type Metadata = Epub.Metadata | object;
+    export type Metadata = EpubMetadata | object;
     export type ChapterText = string;
     export type Chapter = object & { text: ChapterText };
     export type Chapters = { [id: string]: Chapter };
