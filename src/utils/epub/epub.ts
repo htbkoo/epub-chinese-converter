@@ -11,7 +11,7 @@ try {
 } catch (err) {
     // Mock zipfile using pure-JS adm-zip:
     var ZipFile = function(filename) {
-        this.admZip = new AdmZip(filename);
+        this.admZip = new AdmZip.default(filename);
         this.names = this.admZip.getEntries().map(function(zipEntry) {
             return zipEntry.entryName;
         });
