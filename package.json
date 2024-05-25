@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/htbkoo/epub-chinese-converter#readme",
   "devDependencies": {
+    "@types/epub-gen": "^0.1.2",
     "@types/jest": "^25.1.2",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.7.0",
