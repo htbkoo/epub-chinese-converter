@@ -12,7 +12,10 @@ module.exports = function (/*Buffer*/ input) {
         _extra = Buffer.alloc(0);
 
     function getCompressedDataFromZip() {
-        if (!input || !Buffer.isBuffer(input)) {
+        // Fix erroneous "Nothing to decompress" error
+        // Reference: https://github.com/cthackers/adm-zip/issues/337#issuecomment-737515124
+        // if (!input || !Buffer.isBuffer(input)) {
+        if (!input || !(input instanceof Uint8Array)) {
             return Buffer.alloc(0);
         }
         _centralHeader.loadLocalHeaderFromBinary(input);
