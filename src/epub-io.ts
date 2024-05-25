@@ -1,4 +1,4 @@
-import EPub from "epub";
+import { EPub } from "./utils/epub";
 import EpubGen from "epub-gen";
 import {Book} from "./typings";
 
