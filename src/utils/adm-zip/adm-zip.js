@@ -17,6 +17,13 @@ const defaultOptions = {
     fs: null
 };
 
+/**
+ * TODO: properly type the file
+ *  currently this is to mute the typescript error
+ *  reference: https://stackoverflow.com/a/70998955
+ *
+ * @type Class
+ */
 module.exports = function (/**String*/ input, /** object */ options) {
     let inBuffer = null;
 
