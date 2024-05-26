@@ -25,13 +25,9 @@ const { metadata, chapters } = convertedBook;
 ```
 
 ### Limitations
-1. As of v0.1.0, only translation from Simplified Chinese to Traditional Chinese is supported
+1. As of now, only translation from Simplified Chinese to Traditional Chinese is supported
 
-### Caveats
-1. (Help wanted) When using this package as a library in browser environment, **only the converter part can be used** , and it should be imported in this way: 
-    
-    `import {createSimplifiedToTraditionalConverter} from "epub-chinese-converter/dist/converter";`
-      
-   Other error like this would be thrown:
-   
-   `Module not found: Can't resolve 'aws-sdk' in 'node_modules\node-pre-gyp\lib'`
+### Inlined dependencies
+1. [`julien-c/epub`](https://github.com/htbkoo/epub-chinese-converter/tree/master/src/utils/epub)
+2. [`cthackers/adm-zip`](https://github.com/htbkoo/epub-chinese-converter/tree/master/src/utils/adm-zip)
+    1. patched with this commit ([`027f6d1`](https://github.com/htbkoo/epub-chinese-converter/commit/027f6d15440ae8877b62543f31d7f35ad39b113e)) to fix issue when reading `epub` file 
